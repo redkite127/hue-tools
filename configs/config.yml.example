@@ -1,0 +1,11 @@
+frequency_minutes: 2
+home-hub_ip: x.x.x.x
+home-hub_port: 2001
+hue_bridge_ip: x.x.x.x
+hue_bridge_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+hue_motion_sensors:
+  3:
+    name: hall
+  17:
+    name: dressing
+  

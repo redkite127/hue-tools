@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  hue-tools:
+    build: .
+    container_name: hue-tools
+    image: hue-tools
+    ports:
+      - 2002:2002
+    restart: always
+    volumes:
+    - ./configs/:/usr/local/etc:ro
+
