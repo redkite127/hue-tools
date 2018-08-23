@@ -46,7 +46,7 @@ func sendTemperatureAndBattery(room string, temp float32, batt int) error {
 	q.Set("type", "temperature;power")
 	u.RawQuery = q.Encode()
 
-	body := []byte(fmt.Sprintf("%.2f:%.2f", temp, float32(batt)))
+	body := []byte(fmt.Sprintf("%.2f;%d", temp, batt))
 
 	resp, err := http.Post(u.String(), "text/plain", bytes.NewReader(body))
 	if err != nil {

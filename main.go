@@ -62,7 +62,7 @@ Loop:
 					continue
 				}
 
-				log.Debugf("%v: %2.2f°C %2.2f%%", v.Name, t, float32(p))
+				log.Debugf("%v: %2.2f°C %2d%%", v.Name, t, p)
 
 				// Send temperatures to home-hub
 				if err = sendTemperatureAndBattery(v.Name, t, p); err != nil {
