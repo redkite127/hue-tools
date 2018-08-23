@@ -47,6 +47,7 @@ func main() {
 	signal.Notify(gracefulStop, syscall.SIGINT)
 
 	log.Debugln("waiting")
+
 Loop:
 	for {
 		select {
@@ -61,7 +62,7 @@ Loop:
 					continue
 				}
 
-				log.Debugf("%v: %2.2f°C %2.2d%%", v.Name, t, p)
+				log.Debugf("%v: %2.2f°C %2.2f%%", v.Name, t, float32(p))
 
 				// Send temperatures to home-hub
 				if err = sendTemperatureAndBattery(v.Name, t, p); err != nil {
