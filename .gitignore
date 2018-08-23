@@ -1,3 +1,5 @@
-.directory
-configs/config.yml
 hue-tools
+
+.directory
+.vscode
+configs/config.yml

@@ -1,5 +1,7 @@
+hue-tools
+
 .directory
 .dockerignore
 .gitignore
+.vscode
 configs/config.yml
-hue-tools

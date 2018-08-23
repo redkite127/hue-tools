@@ -32,9 +32,12 @@ func init() {
 	for k, v := range motionSensors {
 		log.Infoln("new motion sensor:", k, v)
 	}
+
+	log.SetLevel(log.DebugLevel)
 }
 
 func main() {
+
 	// Prepare ticker
 	tick := time.Tick(time.Duration(viper.GetInt("frequency_minutes")) * time.Minute)
 
@@ -43,6 +46,7 @@ func main() {
 	signal.Notify(gracefulStop, syscall.SIGTERM)
 	signal.Notify(gracefulStop, syscall.SIGINT)
 
+	log.Debugln("waiting")
 Loop:
 	for {
 		select {
@@ -51,15 +55,17 @@ Loop:
 		case <-tick:
 			for k, v := range motionSensors {
 				// Get temperatures from Hue motion sensors
-				t, err := getMotionSensorTemperature(k)
+				t, p, err := getMotionSensorTemperatureAndBattery(k)
 				if err != nil {
-					log.WithError(err).Infoln("failed to get temperature of sensor:", k)
+					log.WithError(err).Infoln("failed to get sensor data:", k)
 					continue
 				}
 
+				log.Debugf("%v: %2.2f°C %2.2d%%", v.Name, t, p)
+
 				// Send temperatures to home-hub
-				if err = sendTemperature(v.Name, t); err != nil {
-					log.WithError(err).Warningln("failed to send temperature of sensor:", k)
+				if err = sendTemperatureAndBattery(v.Name, t, p); err != nil {
+					log.WithError(err).Warningln("failed to send sensor data:", k)
 				}
 			}
 		}

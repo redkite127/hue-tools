@@ -34,3 +34,28 @@ func sendTemperature(room string, temp float32) error {
 
 	return nil
 }
+
+func sendTemperatureAndBattery(room string, temp float32, batt int) error {
+	u, err := url.Parse(fmt.Sprintf("http://%v:%v/sensors", viper.Get("home-hub_ip"), viper.Get("home-hub_port")))
+	if err != nil {
+		return err
+	}
+
+	q := u.Query()
+	q.Set("room", room)
+	q.Set("type", "temperature;power")
+	u.RawQuery = q.Encode()
+
+	body := []byte(fmt.Sprintf("%.2f:%d", temp, batt))
+
+	resp, err := http.Post(u.String(), "text/plain", bytes.NewReader(body))
+	if err != nil {
+		return err
+	}
+
+	if resp.StatusCode != 200 {
+		return errors.New("failed to send data to home-hub")
+	}
+
+	return nil
+}
