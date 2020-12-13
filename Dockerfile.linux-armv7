@@ -3,7 +3,7 @@ FROM golang:1.15 AS builder
 RUN mkdir /go-build
 WORKDIR /go-build
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -o /go-build/hue-tools .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=7  go build -mod=vendor -a -o /go-build/hue-tools .
 
 # RUNNER
 FROM alpine:3.12
@@ -17,5 +17,5 @@ CMD ["hue-tools"]
 # docker run --rm -v $(pwd)/configs/config.yml:/usr/local/etc/config.yml:ro hue-tools
 #
 # Upload to Docker Hub
-# docker build -f Dockerfile.linux-amd64 -t redkite/hue-tools:latest-linux-amd64 .
-# docker push redkite/hue-tools:latest-linux-amd64
+# docker build -f Dockerfile.linux-armv7 -t redkite/hue-tools:latest-linux-armv7 .
+# docker push redkite/hue-tools:latest-linux-armv7
