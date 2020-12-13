@@ -1,0 +1,17 @@
+# BUILDER
+FROM golang:1.15 AS builder
+RUN mkdir /go-build
+WORKDIR /go-build
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -o /go-build/hue-tools .
+
+# RUNNER
+FROM alpine:3.12
+WORKDIR /usr/local/bin
+COPY --from=builder /go-build/hue-tools .
+
+# it does accept the variable $SERVICE
+CMD ["hue-tools"]
+
+# Run locally
+# docker run --rm -v $(pwd)/configs/config.yml:/usr/local/etc/config.yml:ro hue-tools
