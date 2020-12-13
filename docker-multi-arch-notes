@@ -1,0 +1,8 @@
+* Once you have built & pushed each images on your platforms you can create a manifest file and push it
+
+docker manifest create \
+redkite/hue-tools:latest \
+--amend redkite/hue-tools:latest-linux-amd64 \
+--amend redkite/hue-tools:latest-linux-armv7
+
+docker manifest push redkite/hue-tools:latest
