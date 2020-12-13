@@ -1,3 +1,4 @@
+log_level: warning
 frequency_minutes: 2
 home-hub_ip: x.x.x.x
 home-hub_port: 2001

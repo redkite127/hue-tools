@@ -2,10 +2,8 @@ version: '3'
 
 services:
   hue-tools:
-    build: .
+    image: redkite/hue-tools
     container_name: hue-tools
-    image: hue-tools
-    restart: always
     volumes:
     - ./configs/:/usr/local/etc:ro
-
+    restart: unless-stopped

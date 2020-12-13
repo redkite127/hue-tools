@@ -6,6 +6,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -24,6 +25,11 @@ func init() {
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalln(err)
 	}
+	if ll, err := logrus.ParseLevel(viper.GetString("log_level")); err != nil {
+		log.SetLevel(log.InfoLevel)
+	} else {
+		log.SetLevel(ll)
+	}
 	log.Infoln("using config:", viper.ConfigFileUsed())
 
 	viper.SetDefault("frequency_minutes", 1)
@@ -32,8 +38,6 @@ func init() {
 	for k, v := range motionSensors {
 		log.Infoln("new motion sensor:", k, v)
 	}
-
-	log.SetLevel(log.DebugLevel)
 }
 
 func main() {
