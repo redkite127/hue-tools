@@ -15,6 +15,6 @@ CMD ["hue-tools"]
 # Run locally
 # docker run --rm -v $(pwd)/configs/config.yml:/usr/local/etc/config.yml:ro hue-tools
 #
-# Upload to Docker Hub
+# Upload to Docker Hub (execute those commands on a raspberry PI!)
 # docker build -f Dockerfile.linux-armv7 -t redkite/hue-tools:latest-linux-armv7 .
 # docker push redkite/hue-tools:latest-linux-armv7
