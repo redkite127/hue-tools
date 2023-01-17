@@ -1,12 +1,12 @@
 # BUILDER
-FROM golang:1.15 AS builder
+FROM golang:1.19 AS builder
 RUN mkdir /go-build
 WORKDIR /go-build
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -o /go-build/hue-tools .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o /go-build/hue-tools .
 
 # RUNNER
-FROM alpine:3.12
+FROM alpine:3.17
 WORKDIR /usr/local/bin
 COPY --from=builder /go-build/hue-tools .
 
